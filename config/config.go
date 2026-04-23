@@ -988,6 +988,7 @@ type Receiver struct {
 	IncidentioConfigs []*IncidentioConfig `yaml:"incidentio_configs,omitempty" json:"incidentio_configs,omitempty"`
 	PagerdutyConfigs  []*PagerdutyConfig  `yaml:"pagerduty_configs,omitempty" json:"pagerduty_configs,omitempty"`
 	SlackConfigs      []*SlackConfig      `yaml:"slack_configs,omitempty" json:"slack_configs,omitempty"`
+	GatewayConfig     *GatewayConfig      `yaml:"gateway_config,omitempty" json:"gateway_config,omitempty"`
 	WebhookConfigs    []*WebhookConfig    `yaml:"webhook_configs,omitempty" json:"webhook_configs,omitempty"`
 	OpsGenieConfigs   []*OpsGenieConfig   `yaml:"opsgenie_configs,omitempty" json:"opsgenie_configs,omitempty"`
 	WechatConfigs     []*WechatConfig     `yaml:"wechat_configs,omitempty" json:"wechat_configs,omitempty"`

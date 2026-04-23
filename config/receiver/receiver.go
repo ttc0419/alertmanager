@@ -17,13 +17,11 @@ import (
 	"errors"
 	"log/slog"
 
-	commoncfg "github.com/prometheus/common/config"
-	"github.com/prometheus/common/promslog"
-
 	"github.com/prometheus/alertmanager/config"
 	"github.com/prometheus/alertmanager/notify"
 	"github.com/prometheus/alertmanager/notify/discord"
 	"github.com/prometheus/alertmanager/notify/email"
+	"github.com/prometheus/alertmanager/notify/gateway"
 	"github.com/prometheus/alertmanager/notify/incidentio"
 	"github.com/prometheus/alertmanager/notify/jira"
 	"github.com/prometheus/alertmanager/notify/mattermost"
@@ -41,6 +39,8 @@ import (
 	"github.com/prometheus/alertmanager/notify/webhook"
 	"github.com/prometheus/alertmanager/notify/wechat"
 	"github.com/prometheus/alertmanager/template"
+	commoncfg "github.com/prometheus/common/config"
+	"github.com/prometheus/common/promslog"
 )
 
 // BuildReceiverIntegrations builds a list of integration notifiers off of a
@@ -65,6 +65,9 @@ func BuildReceiverIntegrations(nc config.Receiver, tmpl *template.Template, logg
 
 	for i, c := range nc.WebhookConfigs {
 		add("webhook", i, c, func(l *slog.Logger) (notify.Notifier, error) { return webhook.New(c, tmpl, l, httpOpts...) })
+	}
+	if nc.GatewayConfig != nil {
+		add("gateway", 0, nc.GatewayConfig, func(l *slog.Logger) (notify.Notifier, error) { return gateway.New(nc.GatewayConfig, tmpl, l), nil })
 	}
 	for i, c := range nc.EmailConfigs {
 		add("email", i, c, func(l *slog.Logger) (notify.Notifier, error) { return email.New(c, tmpl, l), nil })

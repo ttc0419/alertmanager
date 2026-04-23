@@ -45,6 +45,13 @@ var (
 		},
 	}
 
+	// DefaultGatewayConfig defines default values for gateway configurations.
+	DefaultGatewayConfig = GatewayConfig{
+		NotifierConfig: amcommoncfg.NotifierConfig{
+			VSendResolved: true,
+		},
+	}
+
 	// DefaultWebexConfig defines default values for Webex configurations.
 	DefaultWebexConfig = WebexConfig{
 		NotifierConfig: amcommoncfg.NotifierConfig{
@@ -1268,4 +1275,19 @@ func (c *MattermostConfig) UnmarshalYAML(unmarshal func(any) error) error {
 	}
 
 	return nil
+}
+
+// GatewayConfig configures notifications for the gateway receiver.
+type GatewayConfig struct {
+	amcommoncfg.NotifierConfig `yaml:",inline" json:",inline"`
+
+	AppID     string `yaml:"app_id,omitempty" json:"app_id,omitempty"`
+	AppSecret string `yaml:"app_secret,omitempty" json:"app_secret,omitempty"`
+}
+
+// UnmarshalYAML implements the yaml.Unmarshaler interface.
+func (c *GatewayConfig) UnmarshalYAML(unmarshal func(any) error) error {
+	*c = DefaultGatewayConfig
+	type plain GatewayConfig
+	return unmarshal((*plain)(c))
 }

@@ -30,6 +30,7 @@ require (
 	github.com/hashicorp/golang-lru/v2 v2.0.7
 	github.com/hashicorp/memberlist v0.5.4
 	github.com/jessevdk/go-flags v1.6.1
+	github.com/larksuite/oapi-sdk-go/v3 v3.5.4
 	github.com/oklog/run v1.2.0
 	github.com/oklog/ulid/v2 v2.1.1
 	github.com/prometheus/client_golang v1.23.2
